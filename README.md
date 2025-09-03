@@ -33,6 +33,18 @@ The `config/config.ini` file allows you to customize the bot's behavior.
 *   **[DeveloperBlacklist]**:
     *   `developers`: A comma-separated list of developer addresses to be ignored. (Note: This is a placeholder as developer addresses are not yet available from the current data source).
 
+*   **[FakeVolume]**:
+    *   `min_txns_24h`: The minimum number of transactions (buys + sells) in the last 24 hours for a coin to be considered to have real volume.
+    *   `max_buy_sell_ratio`: The maximum ratio of buys to sells (or sells to buys) for a coin to be considered to have real volume.
+
+## Analysis Features
+
+The bot performs several checks to identify potentially risky coins:
+
+*   **Rug Check:** Integrates with `rugcheck.xyz` to check if a coin is a known rug pull or has a "Danger" rating.
+*   **Bundled Supply Check:** Identifies coins with a high concentration of ownership, which can be a sign of manipulation.
+*   **Fake Volume Check:** Uses heuristics based on transaction counts and buy/sell ratios to detect fake trading volume.
+
 ## Usage
 
 To run the bot, execute the following command from the root directory of the project:
