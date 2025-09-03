@@ -33,6 +33,7 @@ def create_tables(conn=None):
         market_cap REAL,
         liquidity REAL,
         price_usd REAL,
+        volume_h24 REAL,
         txns_h24_buys INTEGER,
         txns_h24_sells INTEGER,
         source TEXT,
