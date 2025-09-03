@@ -34,6 +34,7 @@ The `config/config.ini` file allows you to customize the bot's behavior.
     *   `developers`: A comma-separated list of developer addresses to be ignored. (Note: This is a placeholder as developer addresses are not yet available from the current data source).
 
 *   **[FakeVolume]**:
+    *   `max_volume_to_liquidity_ratio`: The maximum ratio of 24-hour trading volume to liquidity. A high value can indicate wash trading.
     *   `min_txns_24h`: The minimum number of transactions (buys + sells) in the last 24 hours for a coin to be considered to have real volume.
     *   `max_buy_sell_ratio`: The maximum ratio of buys to sells (or sells to buys) for a coin to be considered to have real volume.
 

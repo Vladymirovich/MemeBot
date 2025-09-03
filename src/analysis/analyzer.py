@@ -81,20 +81,19 @@ def has_fake_volume_custom(coin, config):
     """
     Checks for signs of fake volume using custom heuristics.
     """
-    # max_volume_to_liquidity_ratio = float(config['FakeVolume']['max_volume_to_liquidity_ratio'])
+    max_volume_to_liquidity_ratio = float(config['FakeVolume']['max_volume_to_liquidity_ratio'])
     min_txns_24h = int(config['FakeVolume']['min_txns_24h'])
     max_buy_sell_ratio = float(config['FakeVolume']['max_buy_sell_ratio'])
 
-    # This metric is not available in dexscreener
-    # volume_24h = coin['volume_24h']
+    volume_h24 = coin['volume_h24']
     liquidity = coin['liquidity']
     txns_buys = coin['txns_h24_buys']
     txns_sells = coin['txns_h24_sells']
 
-    # if liquidity and volume_24h and liquidity > 0:
-    #     if (volume_24h / liquidity) > max_volume_to_liquidity_ratio:
-    #         print(f"Coin {coin['symbol']} has high volume-to-liquidity ratio.")
-    #         return True
+    if liquidity and volume_h24 and liquidity > 0:
+        if (volume_h24 / liquidity) > max_volume_to_liquidity_ratio:
+            print(f"Coin {coin['symbol']} has high volume-to-liquidity ratio.")
+            return True
 
     if txns_buys is not None and txns_sells is not None:
         total_txns = txns_buys + txns_sells
