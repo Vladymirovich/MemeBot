@@ -28,11 +28,12 @@ class TestFetcher(unittest.TestCase):
         mock_response.json.return_value = {
             "pairs": [
                 {
-                    "pairAddress": "test_address",
-                    "baseToken": {"name": "Test Token", "symbol": "TEST"},
+                    "pairAddress": "pair_address",
+                    "baseToken": {"address": "test_token_address", "name": "Test Token", "symbol": "TEST"},
                     "marketCap": 1000000,
                     "liquidity": {"usd": 50000},
                     "priceUsd": "1.23",
+                    "txns": {"h24": {"buys": 100, "sells": 50}},
                     "info": {"description": "A test token.", "imageUrl": "http://example.com/image.png"}
                 }
             ]
@@ -47,13 +48,14 @@ class TestFetcher(unittest.TestCase):
 
         # Assert that the data was inserted into the database
         cursor = self.conn.cursor()
-        cursor.execute("SELECT * FROM coins WHERE mint_address='test_address'")
+        cursor.execute("SELECT * FROM coins WHERE mint_address='test_token_address'")
         coin = cursor.fetchone()
 
         self.assertIsNotNone(coin)
         self.assertEqual(coin['name'], "Test Token")
         self.assertEqual(coin['symbol'], "TEST")
         self.assertEqual(coin['price_usd'], 1.23)
+        self.assertEqual(coin['txns_h24_buys'], 100)
 
 if __name__ == '__main__':
     unittest.main()

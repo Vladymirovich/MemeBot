@@ -33,11 +33,14 @@ def create_tables(conn=None):
         market_cap REAL,
         liquidity REAL,
         price_usd REAL,
+        txns_h24_buys INTEGER,
+        txns_h24_sells INTEGER,
         source TEXT,
         rug_pull BOOLEAN DEFAULT FALSE,
         pump BOOLEAN DEFAULT FALSE,
         tier1 BOOLEAN DEFAULT FALSE,
-        cex_listed BOOLEAN DEFAULT FALSE
+        cex_listed BOOLEAN DEFAULT FALSE,
+        bundled_supply BOOLEAN DEFAULT FALSE
     )
     """)
 

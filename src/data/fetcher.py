@@ -29,8 +29,8 @@ def fetch_and_store_dexscreener_pairs(search_query, conn=None):
             for pair in data['pairs']:
                 try:
                     cursor.execute("""
-                        INSERT INTO coins (mint_address, name, symbol, description, image_uri, market_cap, liquidity, price_usd, source)
-                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+                        INSERT INTO coins (mint_address, name, symbol, description, image_uri, market_cap, liquidity, price_usd, txns_h24_buys, txns_h24_sells, source)
+                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                         ON CONFLICT(mint_address) DO UPDATE SET
                             name = excluded.name,
                             symbol = excluded.symbol,
@@ -39,9 +39,11 @@ def fetch_and_store_dexscreener_pairs(search_query, conn=None):
                             market_cap = excluded.market_cap,
                             liquidity = excluded.liquidity,
                             price_usd = excluded.price_usd,
+                            txns_h24_buys = excluded.txns_h24_buys,
+                            txns_h24_sells = excluded.txns_h24_sells,
                             last_updated_timestamp = CURRENT_TIMESTAMP
                     """, (
-                        pair.get('pairAddress'),
+                        pair.get('baseToken', {}).get('address'),
                         pair.get('baseToken', {}).get('name'),
                         pair.get('baseToken', {}).get('symbol'),
                         pair.get('info', {}).get('description', ''), # Dexscreener doesn't provide a top-level description
@@ -49,6 +51,8 @@ def fetch_and_store_dexscreener_pairs(search_query, conn=None):
                         pair.get('marketCap'),
                         pair.get('liquidity', {}).get('usd'),
                         pair.get('priceUsd'),
+                        pair.get('txns', {}).get('h24', {}).get('buys'),
+                        pair.get('txns', {}).get('h24', {}).get('sells'),
                         'dexscreener'
                     ))
                     print(f"Inserted or updated pair: {pair.get('baseToken', {}).get('symbol')}")
