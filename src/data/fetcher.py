@@ -59,7 +59,7 @@ def fetch_and_store_dexscreener_pairs(search_query, conn=None):
                     ))
                     print(f"Inserted or updated pair: {pair.get('baseToken', {}).get('symbol')}")
                 except Exception as e:
-                    print(f"Error inserting pair {pair.get('pairAddress')}: {e}")
+                    print(f"Error inserting pair {pair.get('baseToken', {}).get('address')}: {e}")
 
             conn.commit()
             if close_conn_after:

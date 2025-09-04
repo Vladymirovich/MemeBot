@@ -23,6 +23,13 @@ This bot fetches data for new crypto coins from Dexscreener and pump.fun, stores
 
 The `config/config.ini` file allows you to customize the bot's behavior.
 
+*   **[api]**:
+    *   `dexscreener_api_url`: The base URL for the Dexscreener API.
+    *   `pumpportal_websocket_url`: The WebSocket URL for the pumpportal.fun API.
+
+*   **[database]**:
+    *   `db_name`: The name of the SQLite database file.
+
 *   **[Filters]**:
     *   `min_market_cap`: The minimum market cap for a coin to be analyzed.
     *   `min_liquidity`: The minimum liquidity for a coin to be analyzed.
@@ -48,14 +55,25 @@ The bot performs several checks to identify potentially risky coins:
 
 ## Usage
 
-To run the bot, execute the following command from the root directory of the project:
-```bash
-python3 main.py
-```
-This will:
-1.  Initialize the SQLite database (`coins.db`).
-2.  Fetch the latest data for the "PEPE/SOL" pair from Dexscreener.
-3.  Run the (placeholder) analysis functions on the collected data.
+To run the bot, you can use the following commands from the root directory of the project:
+
+*   **Fetch data from Dexscreener and analyze it:**
+    ```bash
+    python3 main.py dexscreener "[search_query]"
+    ```
+    Example: `python3 main.py dexscreener "PEPE/SOL"`
+
+*   **Listen for new coins on pump.fun:**
+    ```bash
+    python3 main.py pumpfun
+    ```
+    This will start a long-running process to listen for new token creations in real-time.
+
+*   **Run both flows concurrently:**
+    ```bash
+    python3 main.py all "[search_query]"
+    ```
+    This will run the Dexscreener fetcher and the pump.fun listener at the same time.
 
 ## Testing
 
