@@ -33,6 +33,7 @@ class TestFetcher(unittest.TestCase):
                     "marketCap": 1000000,
                     "liquidity": {"usd": 50000},
                     "priceUsd": "1.23",
+                    "volume": {"h24": 500000},
                     "txns": {"h24": {"buys": 100, "sells": 50}},
                     "info": {"description": "A test token.", "imageUrl": "http://example.com/image.png"}
                 }
@@ -55,6 +56,7 @@ class TestFetcher(unittest.TestCase):
         self.assertEqual(coin['name'], "Test Token")
         self.assertEqual(coin['symbol'], "TEST")
         self.assertEqual(coin['price_usd'], 1.23)
+        self.assertEqual(coin['volume_h24'], 500000)
         self.assertEqual(coin['txns_h24_buys'], 100)
 
 if __name__ == '__main__':

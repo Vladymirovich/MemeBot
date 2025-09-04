@@ -1,6 +1,7 @@
 import configparser
 import time
 from src.data.database import get_db_connection
+from rugcheck import rugcheck as perform_rugcheck
 
 def get_config():
     """Reads the configuration file."""
@@ -32,14 +33,15 @@ def is_coin_filtered(coin, config):
 
     return False
 
-from rugcheck import rugcheck as perform_rugcheck
-
 def get_rugcheck_data(mint_address):
     """
     Gets the rugcheck data for a given mint address.
     """
     try:
         return perform_rugcheck(mint_address)
+    except SystemExit:
+        print(f"Rugcheck library called exit() for {mint_address}. Treating as an error.")
+        return None
     except Exception as e:
         print(f"Error getting rugcheck data for {mint_address}: {e}")
         return None
